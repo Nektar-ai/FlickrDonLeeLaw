@@ -1,0 +1,26 @@
+<div style="text-align: center;">
+    <input value="" style="width:50%;" type="search" class="form-control" (keyup)="search($event)"
+        placeholder="Tapes ici ta recherche de fesses... sisi, on sait">
+</div>
+<br><br><br><br>
+<div class="containerImg" style="background-image: url('');">
+
+    <div id="divImg" class="divPic" *ngFor="let image of images">
+        <a class="aTest" href="{{image.url}}_b.jpg">
+            <img id="" class="imgTest" src="{{image.url}}_m.jpg" title="{{image.title}}">
+        </a>    
+    </div>
+        
+    <div class="search-results" 
+        infiniteScroll 
+        [infiniteScrollDistance]="2" 
+        [infiniteScrollThrottle]="50"
+        (scrolled)="onScroll()">
+    </div>
+</div>
+
+            <!-- <div>        
+            <img id="imgElmt" class="imgTest" src="{{image.url}}_m.jpg" title="{{image.title}}">
+        </div> -->
+
+        <!-- </a> -->
