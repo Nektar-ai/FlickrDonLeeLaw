@@ -14,8 +14,9 @@ export class ImgsSearchComponent implements OnInit {
   images = [];
   keyword: string;
   imgOrigin: string;
+  imgOrigin2: any;
 
-  @Output() createImg= new EventEmitter<any>(); 
+  // @Output() createImg= new EventEmitter<any>();
 
   constructor(private flickrGetService: FlickrgetService, private elem: ElementRef) { }
 
@@ -37,13 +38,14 @@ export class ImgsSearchComponent implements OnInit {
   //   });
   // }
 
-  search(event: any) {
+  search(event) {
     this.keyword = event.target.value.toLowerCase();
     if (this.keyword && this.keyword.length > 2) {
       this.flickrGetService.search_keyword(this.keyword).toPromise().then(res => {
         this.images = res;
       });
     }
+    event.target.blur();
   }
 
   onScroll() {    
@@ -56,17 +58,14 @@ export class ImgsSearchComponent implements OnInit {
     }
   }
 
-  onCreate(event) {
-    // alert("ok");
-    if (event.target.width*3 < event.target.height || event.target.height*3 < event.target.width)  
-        event.target.style.display = "none"; 
-  }
-
   onImageClick(event) {
     document.querySelector(".containerImg").setAttribute("style","filter: blur(10px)")
     document.querySelector(".blurrer").setAttribute("style","display: block");
     document.querySelector(".original").setAttribute("style","display: block");
     this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+    let picID = event.target.getAttribute("id");
+    this.imgOrigin2 = this.flickrGetService.getBigPic(picID);
+    console.log(this.imgOrigin2)
   }
 
   onBlurrerClick(event){
@@ -76,3 +75,9 @@ export class ImgsSearchComponent implements OnInit {
     this.imgOrigin = "";
   }
 }
+
+  // onCreate(event) {
+  //   // alert("ok");
+  //   if (event.target.width*3 < event.target.height || event.target.height*3 < event.target.width)  
+  //       event.target.style.display = "none"; 
+  // }

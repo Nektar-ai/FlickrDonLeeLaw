@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-
-import 'flickr-sdk';
+// import { Observable } from 'rxjs';
+// import 'flickr-sdk';
 
 export interface FlickrPic {
   farm: string;
@@ -27,9 +26,10 @@ export class FlickrgetService {
 
   prevKeyword: string;
   currPage = 1;
-  imgHeight = 0;
-  imgWidth = 0;
-  ok = false;
+  oriPic: any;
+  // imgHeight = 0;
+  // imgWidth = 0;
+  
 
   constructor(private http: HttpClient) { }
 
@@ -83,10 +83,20 @@ export class FlickrgetService {
     }));
   }
 
-  
+  getBigPic (id: string): any 
+  {
+    return this.getSize(id).subscribe (data =>{
+
+      let sizeList = data["sizes"]["size"];
+      // var lastSize = sizeList.pop();
+      this.oriPic = sizeList.pop();
+      console.log(this.oriPic)
+      console.log(this.oriPic.height, this.oriPic.width)
+      return this.oriPic;
+    })
+  }
+
 }
-
-
         // this.getSize(pic.id).toPromise().then(data =>{
         //   let sizeList = data["sizes"]["size"];
         //   let ok = false;
@@ -169,6 +179,4 @@ export class FlickrgetService {
       // sizesIn.push(lastSize.width);        
       //   if (lastSize.height*3 > lastSize.width && lastSize.width*3 > lastSize.height)
       //     photoObject = null;
-      // })
-
       // })

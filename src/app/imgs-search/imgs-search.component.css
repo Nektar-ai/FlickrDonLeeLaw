@@ -45,16 +45,6 @@ img {
     border-color: black;
     height: inherit;
     width:var(--ratio)}
-    
-
-.picFull
-{
-    display: none;
-    height: 50%;
-    width: var(--ratio);
-    background-color: #888888;
-    padding: 10%;
-}
 
 
 .divPic:hover {
@@ -179,6 +169,15 @@ iframe.original{
     height: 10px;
     border-radius: 5px;
 }
+
+/* .picFull
+{
+    display: none;
+    height: 50%;
+    width: var(--ratio);
+    background-color: #888888;
+    padding: 10%;
+} */
 
 /* .divPic::after {
     --w: 2;
