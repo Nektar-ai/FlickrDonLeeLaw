@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -23,18 +23,22 @@ export interface FlickrOut {
 @Injectable({
   providedIn: 'root'
 })
+
 export class FlickrgetService {
 
   prevKeyword: string;
   currPage = 1;
   imgHeight = 0;
   imgWidth = 0;
+  mediaType: string;
+  dateMin: number;
+  dateMax: number;
   ok = false;
 
   constructor(private http: HttpClient) { }
 
   getSize(photoID): any {
-    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
+    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${environment.flickrKey.key}&photo_id=${photoID}&media=${this.mediaType}&min_upload_date=${this.dateMin}&max_upload_date=${this.dateMax}&format=json&nojsoncallback=1`);
   }
 
   search_keyword(keyword: string) { // Fonction appelée depuis le composant qui présente l'input à l'utilisateur pour taper ses champs de recherche
@@ -83,6 +87,17 @@ export class FlickrgetService {
     }));
   }
 
+  setMedia(type: string): void {
+    this.mediaType = type;
+  }
+
+  setDateMin(min: number): void {
+    this.dateMin = min;
+  }
+
+  setDateMax(max: number): void {
+    this.dateMax = max;
+  }
   
 }
 

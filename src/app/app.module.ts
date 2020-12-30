@@ -5,19 +5,22 @@ import { AppComponent } from './app.component';
 import { ImgsSearchComponent } from './imgs-search/imgs-search.component';
 import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { FiltreImagesComponent } from './filtre-images/filtre-images.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ImgsSearchComponent
+    ImgsSearchComponent,
+    FiltreImagesComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    InfiniteScrollModule
-  
+    InfiniteScrollModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [FiltreImagesComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
