@@ -74,7 +74,23 @@ export class ImgsSearchComponent implements OnInit {
     event.target.nextElementSibling.firstElementChild.style.display = "none";
     this.imgOrigin = "";
   }
+
+  getBigPic (id: string): any 
+  {
+    return this.flickrGetService.getSize(id).subscribe (data =>{
+
+      let sizeList = data["sizes"]["size"];
+      // var lastSize = sizeList.pop();
+      this.oriPic = sizeList.pop();
+      console.log(this.oriPic)
+      console.log(this.oriPic.height, this.oriPic.width)
+      return this.oriPic;
+    })
+  }
+
+
 }
+
 
   // onCreate(event) {
   //   // alert("ok");
