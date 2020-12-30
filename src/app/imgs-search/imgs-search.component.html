@@ -6,9 +6,7 @@
 <div class="containerImg" style="background-image: url('');">
 
     <div id="divImg" class="divPic" *ngFor="let image of images">
-        <a class="aTest" href="{{image.url}}_b.jpg">
-            <img id="" class="imgTest" src="{{image.url}}_m.jpg" title="{{image.title}}">
-        </a>    
+        <img id="" class="imgTest" src="{{image.url}}_m.jpg" title="{{image.title}}" (click)="onImageClick($event)">
     </div>
         
     <div class="search-results" 
@@ -17,6 +15,10 @@
         [infiniteScrollThrottle]="50"
         (scrolled)="onScroll()">
     </div>
+</div>
+<div class="blurrer" (click)="onBlurrerClick($event)"></div>
+<div  class="imgContainer">
+  <img src={{imgOrigin}} alt="Orginal sized image" class="original" >
 </div>
 
             <!-- <div>        

@@ -13,6 +13,7 @@ export class ImgsSearchComponent implements OnInit {
 
   images = [];
   keyword: string;
+  imgOrigin: string;
 
   @Output() createImg= new EventEmitter<any>(); 
 
@@ -59,5 +60,19 @@ export class ImgsSearchComponent implements OnInit {
     // alert("ok");
     if (event.target.width*3 < event.target.height || event.target.height*3 < event.target.width)  
         event.target.style.display = "none"; 
+  }
+
+  onImageClick(event) {
+    document.querySelector(".containerImg").setAttribute("style","filter: blur(10px)")
+    document.querySelector(".blurrer").setAttribute("style","display: block");
+    document.querySelector(".original").setAttribute("style","display: block");
+    this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+  }
+
+  onBlurrerClick(event){
+    document.querySelector(".containerImg").setAttribute("style","filter: unset")
+    event.target.style.display = "none";
+    event.target.nextElementSibling.firstElementChild.style.display = "none";
+    this.imgOrigin = "";
   }
 }

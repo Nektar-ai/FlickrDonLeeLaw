@@ -81,6 +81,104 @@ img {
     /* flex-grow: calc(var(--ratio) * 100) */
 }
 
+.blurrer {
+    background-color: #212121;
+    opacity: 0.5;
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+}
+
+.imageScroll {
+    position: absolute;
+    left: 0;
+    top: 100px;
+    width: 100%;
+    height: calc(100% - 110px);
+    overflow: auto;
+    z-index: 1;
+    padding-top: 10px;
+}
+
+.imageScroll::-webkit-scrollbar {
+    width: 10px;
+    position: relative;
+    left: 5px;
+}
+  
+.imageScroll::-webkit-scrollbar-track {
+    background: transparent;
+    border-left: 10px;
+}
+  
+.imageScroll::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #444;
+}
+  
+.imageScroll::-webkit-scrollbar-thumb:hover {
+    background: #292929;
+}
+
+.imageScroll::-webkit-scrollbar-button {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.original {
+    height: fit-content;
+    max-height: 100%;
+    box-shadow: 0 0 5px black;
+    display: none;
+}
+
+iframe.original{
+    width: 100%;
+}
+
+.imgContainer{
+    z-index: 4;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: fit-content;
+    max-height: 90%;
+    width: fit-content;
+    max-width: 95%;
+    padding-right: 10px;
+    overflow: auto;
+}
+
+.imgContainer::-webkit-scrollbar {
+    width: 10px;
+    position: relative;
+    left: 5px;
+}
+
+.imgContainer::-webkit-scrollbar-track {
+    background: transparent;
+    border-left: 10px;
+}
+  
+.imgContainer::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: #444;
+}
+  
+.imgContainer::-webkit-scrollbar-thumb:hover {
+    background: #292929;
+}
+
+.imgContainer::-webkit-scrollbar-button {
+    height: 10px;
+    border-radius: 5px;
+}
+
 /* .divPic::after {
     --w: 2;
     --h: 1;
