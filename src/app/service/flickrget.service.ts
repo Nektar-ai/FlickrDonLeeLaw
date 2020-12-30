@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -22,14 +22,17 @@ export interface FlickrOut {
 @Injectable({
   providedIn: 'root'
 })
+
 export class FlickrgetService {
 
   prevKeyword: string;
   currPage = 1;
-  oriPic: any;
-  // imgHeight = 0;
-  // imgWidth = 0;
-  
+  imgHeight = 0;
+  imgWidth = 0;
+  mediaType: string;
+  dateMin: number;
+  dateMax: number;
+  ok = false;
 
   constructor(private http: HttpClient) { }
 
@@ -47,12 +50,12 @@ export class FlickrgetService {
     this.prevKeyword = keyword;
 
     const url = "https://www.flickr.com/services/rest/?method=flickr.photos.search&";
-    const params = `api_key=${environment.flickrKey.key}&text=${keyword}&format=json&nojsoncallback=1&per_page=48&page=${this.currPage}`;
+    const params = `api_key=${environment.flickrKey.key}&text=${keyword}&media=${this.mediaType}&min_upload_date=${this.dateMin}&max_upload_date=${this.dateMax}&format=json&nojsoncallback=1&per_page=48&page=${this.currPage}`;
 
     return this.http.get(url + params).pipe(map((res: FlickrOut) => {
       const urlArr = [];
       res.photos.photo.forEach((pic: FlickrPic) => {
-        let photoObject = {
+        const photoObject = {
           id: pic.id,
           url: `https://farm${pic.farm}.staticflickr.com/${pic.farm}/${pic.id}_${pic.secret}`,
           title: pic.title,
@@ -65,6 +68,28 @@ export class FlickrgetService {
 
       const urlArrFinal = [];
       
+      return urlArr;
+      
+    }));
+  }
+
+  setMedia(type: string): void {
+    this.mediaType = type;
+    console.log("SET SERVICE MEDIA", this.mediaType);
+  }
+
+  setDateMin(min: number): void {
+    this.dateMin = min;
+    console.log("SET SERVICE MIN", this.dateMin);
+  }
+
+  setDateMax(max: number): void {
+    this.dateMax = max;
+    console.log("SET SERVICE MAX", this.dateMax);
+  }
+  
+}
+
       // urlArr.forEach((picObj: any) => { // Ici, c'est ma 2ème tentative, la 1ère était au dessus du if (pic.farm....)
         
       //   this.getSize(picObj.id).subscribe (data =>{
