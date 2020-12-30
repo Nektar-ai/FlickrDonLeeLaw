@@ -25,16 +25,19 @@ export class FiltreImagesComponent implements OnInit {
 
   setMediaType(type: string): void {
     this.media = type;
+    console.log("SET COMPO MEDIA", this.media);
     this.flickr.setMedia(this.media);
   }
 
   setDateUploadMin(): void {
     this.dateMin = Date.parse(this.uploadMin);
+    console.log("SET COMPO MIN", this.dateMin);
     this.flickr.setDateMin(this.dateMin);
   }
 
   setDateUploadMax(): void {
-    this.dateMax = Date.parse(this.uploadMin);
+    this.dateMax = Date.parse(this.uploadMax);
+    console.log("SET COMPO MAX", this.dateMax);
     this.flickr.setDateMax(this.dateMax);
   }
 
