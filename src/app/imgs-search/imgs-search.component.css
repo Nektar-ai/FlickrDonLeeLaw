@@ -1,5 +1,5 @@
 input {
-    transition: all .1s east-out;
+    transition: all .1s ease;
     display: inline-block;
     border-radius: 10px;}
 
