@@ -145,17 +145,17 @@ export class ImgsSearchComponent implements OnInit {
   }
 
   showInfo(event){
-    if (event.target.getAttribute("class") == "info") {
-      event.target.setAttribute("class","info infoShow")
-      event.target.innerHTML = "";
+    if (document.querySelector(".info").getAttribute("class") == "info") {
+      document.querySelector(".info").setAttribute("class","info infoShow")
+      document.querySelector(".info").innerHTML = "";
       setTimeout(() => {
-        event.target.innerHTML = this.titre.toUpperCase().bold() + "<br><br><strong>Description :</strong><br>" + this.description + "<br><br><strong>Owner :</strong><br>" + this.owner + "<br><br><strong>Date :</strong><br>" + this.date.slice(0,10) + "<br>";
+        document.querySelector(".info").innerHTML = this.titre.toUpperCase().bold() + "<br><br><strong>Description :</strong><br>" + this.description + "<br><br><strong>Owner :</strong><br>" + this.owner + "<br><br><strong>Date :</strong><br>" + this.date.slice(0,10) + "<br>";
       }, 500);
     } else {
-      event.target.setAttribute("class","info")
-      event.target.innerHTML = "";
+      document.querySelector(".info").setAttribute("class","info")
+      document.querySelector(".info").innerHTML = "";
       setTimeout(() => {
-        event.target.innerHTML = "i";
+        document.querySelector(".info").innerHTML = "i";
       }, 1000);
     }
   }
@@ -168,7 +168,8 @@ export class ImgsSearchComponent implements OnInit {
         this.flickrGetService.getSize(element["id"]).subscribe( data1 => {
           const photoStruck = {
             thumbnail: data1["sizes"]["size"][0]["source"],
-            orignal: data1["sizes"]["size"].pop()["source"]
+            original: data1["sizes"]["size"].pop()["source"],
+            id: element["id"]
           }
           this.OwnerImages.push(photoStruck)
         })
@@ -177,7 +178,15 @@ export class ImgsSearchComponent implements OnInit {
   }
 
   OwnerImgclick(event){
-    this.imgOrigin = event.target.alt;
+    document.querySelector(".original").setAttribute("src","");
+    this.img1024 = event.target.alt;
+    this.getImginfo(event);
+    if (document.querySelector(".info").innerHTML != "i") {
+      document.querySelector(".info").innerHTML = "";
+      setTimeout(() => {
+        document.querySelector(".info").innerHTML = this.titre.toUpperCase().bold() + "<br><br><strong>Description :</strong><br>" + this.description + "<br><br><strong>Owner :</strong><br>" + this.owner + "<br><br><strong>Date :</strong><br>" + this.date.slice(0,10) + "<br>";
+      }, 500);
+    }
   }
 }
 

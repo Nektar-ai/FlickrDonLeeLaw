@@ -28,6 +28,6 @@
     </div>
     <div class="info" (click)="showInfo($event)"> i </div>
     <div class="owners">
-        <img *ngFor="let image of OwnerImages" alt={{image.original}} src={{image.thumbnail}} class="ownersImage" (click)="OwnerImgclick($event)">
+        <img id="{{image.id}}" *ngFor="let image of OwnerImages" alt={{image.original}} src={{image.thumbnail}} class="ownersImage" (click)="OwnerImgclick($event)">
     </div>
 </div>
