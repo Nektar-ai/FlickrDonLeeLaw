@@ -1,6 +1,6 @@
 <div style="text-align: center;">
-    <input value="" style="width:50%;" type="search" class="form-control" (keyup)="search($event)"
-        placeholder="Tapes ici ta recherche de fesses... sisi, on sait">
+    <input value="" style="width:50%;" type="search" class="form-control" (keyup.enter)="search($event)"
+        placeholder="Keyword...">
 </div>
 
 <!--ICI APPEL AU COMPONENT DE FILTRES-->
@@ -20,20 +20,14 @@
         (scrolled)="onScroll()">
     </div>
 </div>
+
 <div class="blurrer" (click)="onBlurrerClick($event)"></div>
 <div class="imgContainer">
     <div>
-        <img src={{imgOrigin}} alt="Orginal sized image" class="original">
+        <img class="original" src={{img1024}} alt="Orginal sized image">
     </div>
     <div class="info" (click)="showInfo($event)"> i </div>
     <div class="owners">
         <img *ngFor="let image of OwnerImages" alt={{image.original}} src={{image.thumbnail}} class="ownersImage" (click)="OwnerImgclick($event)">
     </div>
 </div>
-
-
-            <!-- <div>        
-            <img id="imgElmt" class="imgTest" src="{{image.url}}_m.jpg" title="{{image.title}}">
-        </div> -->
-
-        <!-- </a> -->

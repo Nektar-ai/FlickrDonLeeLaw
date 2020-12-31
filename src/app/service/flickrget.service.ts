@@ -4,8 +4,6 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 
-import 'flickr-sdk';
-
 export interface FlickrPic {
   farm: string;
   id: string;
@@ -28,8 +26,8 @@ export class FlickrgetService {
 
   prevKeyword: string;
   currPage = 1;
-  imgHeight = 0;
-  imgWidth = 0;
+  // imgHeight = 0;
+  // imgWidth = 0;
   mediaType: string;
   dateMin: number;
   dateMax: number;
@@ -59,19 +57,26 @@ export class FlickrgetService {
         const photoObject = {
           id: pic.id,
           url: `https://farm${pic.farm}.staticflickr.com/${pic.farm}/${pic.id}_${pic.secret}`,
-          title: pic.title,
-
+          title: pic.title          
         };
-
+        console.log(pic);
         if (pic.farm != "0")
           urlArr.push(photoObject);
       });
-
-      const urlArrFinal = [];
       
       return urlArr;
       
     }));
+  }
+
+  getBigPic (id: string): any 
+  {
+    return this.getSize(id).subscribe (data =>{
+      let sizeList = data["sizes"]["size"];
+      let imgOriginObj = sizeList.pop();
+      let imgOrigin = imgOriginObj["source"]
+      return imgOrigin;
+    })
   }
 
   setMedia(type: string): void {
@@ -97,6 +102,11 @@ export class FlickrgetService {
     return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickrKey.key}&user_id=${owner}&format=json&nojsoncallback=1`);
   }
 }
+
+
+
+
+
 
 
         // this.getSize(pic.id).toPromise().then(data =>{
@@ -183,4 +193,15 @@ export class FlickrgetService {
       //     photoObject = null;
       // })
 
-      // })
+  // getBigPic (id: string): any 
+  // {
+  //   return this.getSize(id).subscribe (data =>{
+
+  //     let sizeList = data["sizes"]["size"];
+  //     // var lastSize = sizeList.pop();
+  //     this.oriPic = sizeList.pop();
+  //     console.log(this.oriPic)
+  //     console.log(this.oriPic.height, this.oriPic.width)
+  //     return this.oriPic;
+  //   })
+  // }

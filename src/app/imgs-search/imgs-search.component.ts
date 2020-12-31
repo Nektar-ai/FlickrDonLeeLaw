@@ -3,26 +3,36 @@ import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { title } from 'process';
-import { FlickrgetService } from '../service/flickrget.service';
+import { map } from 'rxjs/operators';
+import { FlickrgetService, FlickrOut, FlickrPic } from '../service/flickrget.service';
+
+export interface FlickrInfo {
+
+
+
+}
 
 @Component({
   selector: 'app-imgs-search',
   templateUrl: './imgs-search.component.html',
   styleUrls: ['./imgs-search.component.css']
 })
+
+
+
 export class ImgsSearchComponent implements OnInit {
 
   images = [];
   OwnerImages = [];
   keyword: string;
-  imgOrigin: string;
+  img1024: string;
+  imgOrigin: any;
 
   // faire une class Nektar
   titre: string;
   description: string;
   owner: string;
   date: string;
-
 
   @Output() createImg= new EventEmitter<any>(); 
 
@@ -46,13 +56,14 @@ export class ImgsSearchComponent implements OnInit {
   //   });
   // }
 
-  search(event: any) {
+  search(event) {
     this.keyword = event.target.value.toLowerCase();
     if (this.keyword && this.keyword.length > 2) {
       this.flickrGetService.search_keyword(this.keyword).toPromise().then(res => {
         this.images = res;
       });
     }
+    event.target.blur();
   }
 
   onScroll() {    
@@ -65,20 +76,24 @@ export class ImgsSearchComponent implements OnInit {
     }
   }
 
-  onCreate(event) {
-    // alert("ok");
-    if (event.target.width*3 < event.target.height || event.target.height*3 < event.target.width)  
-        event.target.style.display = "none"; 
-  }
-
   onImageClick(event) {
     document.querySelector(".containerImg").setAttribute("style","filter: blur(10px)")
     document.querySelector(".blurrer").setAttribute("style","display: block");
+    document.querySelector(".original").setAttribute("style","display: block");
+    this.img1024 = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+
+    // console.log(imgOriginObj.height, imgOriginObj.width)
+    // this.imgOrigin2 = this.flickrGetService.getBigPic(picID);
+    // console.log(this.imgOrigin2)
     document.querySelector(".imgContainer").setAttribute("style","display: flex");
     document.querySelector(".info").setAttribute("class","info");
 
-    this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+    // this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
     this.getImginfo(event);
+
+    // let picID = event.target.getAttribute("id");
+    // this.imgOrigin = this.flickrGetService.getBigPic(picID);
+    
   }
 
   onBlurrerClick(event){
@@ -86,8 +101,38 @@ export class ImgsSearchComponent implements OnInit {
     document.querySelector(".info").innerHTML = "i";
     event.target.style.display = "none";
     event.target.nextElementSibling.style.display = "none";
-    this.imgOrigin = "";
+    // event.target.nextElementSibling.firstElementChild.style.display = "none";
+    this.img1024 = "";
   }
+
+  getBigPic (id: string): any{
+    return this.flickrGetService.getSize(id).subscribe (data =>{
+      let sizeList = data["sizes"]["size"];
+      let imgOriginObj = sizeList.pop();
+      this.imgOrigin = imgOriginObj["source"]
+      console.log(this.imgOrigin)
+      console.log(imgOriginObj.height, imgOriginObj.width)
+    })
+  }
+
+  // getImginfo2(event){
+  //   this.flickrGetService.getInfo(event.target.getAttribute("id")).pipe(map((res: FlickrOut) => {
+  //     // this.titre = data["title"]["_content"];
+  //     alert("IM IN");
+  //     res.photos.photo.forEach ((pic: FlickrPic) => {
+  //     console.log(pic);
+      
+  //     this.titre = pic.title
+      
+  //     // this.titre = photoInfo.titre
+  //     this.description = pic["description"]["_content"];
+  //     this.owner = pic["owner"]["username"];
+  //     this.date = pic["dates"]["taken"];
+  //     this.date = this.date.slice(0,10);
+  //     // console.log(this.date);
+  //     // console.log(data)
+  //   })}))
+  // }
 
   getImginfo(event){
     this.flickrGetService.getInfo(event.target.getAttribute("id")).subscribe(data => {
@@ -104,9 +149,9 @@ export class ImgsSearchComponent implements OnInit {
       event.target.setAttribute("class","info infoShow")
       event.target.innerHTML = "";
       setTimeout(() => {
-        event.target.innerHTML = this.titre + "<br><br>description :<br>" + this.description + "<br>owner :<br>" + this.owner + "<br>date :<br>" + this.date + "<br>";
+        event.target.innerHTML = this.titre.toUpperCase().bold() + "<br><br><strong>Description :</strong><br>" + this.description + "<br><br><strong>Owner :</strong><br>" + this.owner + "<br><br><strong>Date :</strong><br>" + this.date.slice(0,10) + "<br>";
       }, 500);
-    }else{
+    } else {
       event.target.setAttribute("class","info")
       event.target.innerHTML = "";
       setTimeout(() => {
@@ -135,3 +180,9 @@ export class ImgsSearchComponent implements OnInit {
     this.imgOrigin = event.target.alt;
   }
 }
+
+  // onCreate(event) {
+  //   // alert("ok");
+  //   if (event.target.width*3 < event.target.height || event.target.height*3 < event.target.width)  
+  //       event.target.style.display = "none"; 
+  // }
