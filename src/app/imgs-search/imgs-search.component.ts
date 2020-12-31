@@ -3,13 +3,23 @@ import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { title } from 'process';
-import { FlickrgetService } from '../service/flickrget.service';
+import { map } from 'rxjs/operators';
+import { FlickrgetService, FlickrOut, FlickrPic } from '../service/flickrget.service';
+
+export interface FlickrInfo {
+
+
+
+}
 
 @Component({
   selector: 'app-imgs-search',
   templateUrl: './imgs-search.component.html',
   styleUrls: ['./imgs-search.component.css']
 })
+
+
+
 export class ImgsSearchComponent implements OnInit {
 
   images = [];
@@ -22,7 +32,6 @@ export class ImgsSearchComponent implements OnInit {
   description: string;
   owner: string;
   date: string;
-
 
   @Output() createImg= new EventEmitter<any>(); 
 
@@ -78,12 +87,12 @@ export class ImgsSearchComponent implements OnInit {
     document.querySelector(".imgContainer").setAttribute("style","display: flex");
     document.querySelector(".info").setAttribute("class","info");
 
-    this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+    // this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
     this.getImginfo(event);
 
-    let picID = event.target.getAttribute("id");
-    this.imgOrigin = this.flickrGetService.getBigPic(picID)
-    console.log(this.imgOrigin)
+    // let picID = event.target.getAttribute("id");
+    // this.imgOrigin = this.flickrGetService.getBigPic(picID);
+    
   }
 
   onBlurrerClick(event){
@@ -105,12 +114,33 @@ export class ImgsSearchComponent implements OnInit {
     })
   }
 
+  // getImginfo2(event){
+  //   this.flickrGetService.getInfo(event.target.getAttribute("id")).pipe(map((res: FlickrOut) => {
+  //     // this.titre = data["title"]["_content"];
+  //     alert("IM IN");
+  //     res.photos.photo.forEach ((pic: FlickrPic) => {
+  //     console.log(pic);
+      
+  //     this.titre = pic.title
+      
+  //     // this.titre = photoInfo.titre
+  //     this.description = pic["description"]["_content"];
+  //     this.owner = pic["owner"]["username"];
+  //     this.date = pic["dates"]["taken"];
+  //     this.date = this.date.slice(0,10);
+  //     // console.log(this.date);
+  //     // console.log(data)
+  //   })}))
+  // }
+
   getImginfo(event){
     this.flickrGetService.getInfo(event.target.getAttribute("id")).subscribe(data => {
       this.titre = data["photo"]["title"]["_content"];
       this.description = data["photo"]["description"]["_content"];
       this.owner = data["photo"]["owner"]["username"];
       this.date = data["photo"]["dates"]["taken"];
+      // this.date = this.date.slice(0,10);
+      // console.log(this.date);
       console.log(data)
     })
   }
@@ -120,7 +150,7 @@ export class ImgsSearchComponent implements OnInit {
       event.target.setAttribute("class","info infoShow")
       event.target.innerHTML = "";
       setTimeout(() => {
-        event.target.innerHTML = this.titre + "<br><br>description :<br>" + this.description + "<br>owner :<br>" + this.owner + "<br>date :<br>" + this.date + "<br>";
+        event.target.innerHTML = this.titre.toUpperCase().bold() + "<br><br><strong>Description :</strong><br>" + this.description + "<br><br><strong>Owner :</strong><br>" + this.owner + "<br><br><strong>Date :</strong><br>" + this.date.slice(0,10) + "<br>";
       }, 500);
     } else {
       event.target.setAttribute("class","info")

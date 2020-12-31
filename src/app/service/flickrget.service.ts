@@ -39,6 +39,10 @@ export class FlickrgetService {
     return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
   }
 
+  getInfo(photoID){
+    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
+  }
+
   search_keyword(keyword: string) { // Fonction appelée depuis le composant qui présente l'input à l'utilisateur pour taper ses champs de recherche
 
     if (this.prevKeyword === keyword) {        
@@ -57,9 +61,9 @@ export class FlickrgetService {
         const photoObject = {
           id: pic.id,
           url: `https://farm${pic.farm}.staticflickr.com/${pic.farm}/${pic.id}_${pic.secret}`,
-          title: pic.title,
+          title: pic.title          
         };
-
+        console.log(pic);
         if (pic.farm != "0")
           urlArr.push(photoObject);
       });
@@ -92,10 +96,6 @@ export class FlickrgetService {
   setDateMax(max: number): void {
     this.dateMax = max;
     console.log("SET SERVICE MAX", this.dateMax);
-  }
-
-  getInfo(photoID){
-    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
   }
 }
 
