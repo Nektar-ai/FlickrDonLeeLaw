@@ -2,8 +2,7 @@ import { Injectable, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-// import { Observable } from 'rxjs';
-// import 'flickr-sdk';
+import { Observable } from 'rxjs';
 
 export interface FlickrPic {
   farm: string;
@@ -27,8 +26,8 @@ export class FlickrgetService {
 
   prevKeyword: string;
   currPage = 1;
-  imgHeight = 0;
-  imgWidth = 0;
+  // imgHeight = 0;
+  // imgWidth = 0;
   mediaType: string;
   dateMin: number;
   dateMax: number;
@@ -77,8 +76,6 @@ export class FlickrgetService {
       let imgOriginObj = sizeList.pop();
       let imgOrigin = imgOriginObj["source"]
       return imgOrigin;
-      // console.log(this.imgOrigin)
-      // console.log(imgOriginObj.height, imgOriginObj.width)
     })
   }
 
@@ -102,13 +99,10 @@ export class FlickrgetService {
   }
 }
 
-      //return urlArrFinal;
-  //     return urlArr;
-      
-  //   }));
-  // }
 
-  
+
+
+
 
 
         // this.getSize(pic.id).toPromise().then(data =>{

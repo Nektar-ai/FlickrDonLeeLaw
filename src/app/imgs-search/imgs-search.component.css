@@ -1,27 +1,24 @@
 input {
     transition: all .1s ease;
     display: inline-block;
-    border-radius: 10px;}
+    border-radius: 10px
+}
 
 input:hover {
-    transform: scale(1.01)}
+    transform: scale(1.01)
+}
 
 .containerImg {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
-    /* justify-content: space-around; */
+    flex-wrap: wrap;    
     margin-left: 20%;
     margin-right: 20%;
     justify-content: center;
-    /* max-width: 60%; */
-    
 }
 
 .divPic {
     display: flex;
-    /* flex-wrap: wrap; */
-    /* justify-content: space-between; */
     transition: all .3s ease-out;
     height: 140px;
     width:fit-content;
@@ -29,7 +26,7 @@ input:hover {
     margin-top: 5px;
     margin-bottom: 5px;
     max-width: inherit;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .imgTest {
@@ -37,18 +34,16 @@ input:hover {
 }
 
 img {
-    /* object-fit: cover; */
-    /* width:350px;
-    height: 250px; */
     border: 1px  solid;
     border-radius: 10px;
     border-color: black;
     height: inherit;
-    width:var(--ratio)}
-
+    width:var(--ratio)
+}
 
 .divPic:hover {
-    transform: scale(1.05)}
+    transform: scale(1.05)
+}
   
 .divPic > div, .divPic::after {
     --ratio: calc(var(--w) / var(--h));
@@ -56,10 +51,12 @@ img {
     width: fit-content;
     flex-basis: calc(var(--ratio) * var(--row-height)) 
 }
+
 .divPic > div {
     height: inherit;
     margin: 0.25rem;
-    flex-grow: calc(var(--ratio) * 100)} */
+    flex-grow: calc(var(--ratio) * 100)
+}
   
 .divPic > a, .divPic::after {
     --ratio: calc(var(--w) / var(--h));
@@ -194,7 +191,6 @@ iframe.original{
 .info:hover {
     background-color: #505050;
     box-shadow: 0 0 20px white;
-
 }
 
 .infoShow{
@@ -211,50 +207,5 @@ iframe.original{
 }
 
 .infoShow:hover {
-    background-color: #000000AA;
-    
+    background-color: #000000AA;  
 }
-/* .divPic::after {
-    --w: 2;
-    --h: 1;
-    content: '';
-    flex-grow: 1000000;
-} */
-  
-/* .divPic > a > img {
-    display: block;
-    width: 100%
-} */
-
-    /* .containerBis {
-    width:100%;
-    padding-right:15px;
-    padding-left:15px;
-    margin-right:auto;
-    margin-left:auto;
-    display:-ms-flexbox;
-    display:flex;
-
-    -ms-flex-align:center;
-    align-items:center;
-    -ms-flex-pack:justify;
-    justify-content:space-between} */
-
-/* .rowImg {
-
-    display:-ms-flexbox;
-    display:flex;
-    -ms-flex-wrap:wrap;
-    flex-wrap:wrap;
-    margin-right:-15px;
-    margin-left:-15px} */
-
-    
-/* .rowImg6 {
-    column-width: 150px;
-    column-count: 6;
-    padding-right: 20px;
-    padding-left: 20px;
-    margin-top: 50px;
-    max-width: 1200px;
-} */

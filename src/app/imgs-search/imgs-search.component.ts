@@ -95,8 +95,7 @@ export class ImgsSearchComponent implements OnInit {
     this.img1024 = "";
   }
 
-  getBigPic (id: string): any 
-  {
+  getBigPic (id: string): any{
     return this.flickrGetService.getSize(id).subscribe (data =>{
       let sizeList = data["sizes"]["size"];
       let imgOriginObj = sizeList.pop();
@@ -123,7 +122,7 @@ export class ImgsSearchComponent implements OnInit {
       setTimeout(() => {
         event.target.innerHTML = this.titre + "<br><br>description :<br>" + this.description + "<br>owner :<br>" + this.owner + "<br>date :<br>" + this.date + "<br>";
       }, 500);
-    }else{
+    } else {
       event.target.setAttribute("class","info")
       event.target.innerHTML = "";
       setTimeout(() => {
