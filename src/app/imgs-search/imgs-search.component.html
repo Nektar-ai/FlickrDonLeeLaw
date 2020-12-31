@@ -22,9 +22,13 @@
 </div>
 
 <div class="blurrer" (click)="onBlurrerClick($event)"></div>
-<div  class="imgContainer">
-  <img src={{imgOrigin}} alt="Orginal sized image" class="original" >
+<div class="imgContainer">
+    <div>
+        <img src={{imgOrigin}} alt="Orginal sized image" class="original">
+    </div>
+    <div class="info" (click)="showInfo($event)"> i </div>
 </div>
+
 
             <!-- <div>        
             <img id="imgElmt" class="imgTest" src="{{image.url}}_m.jpg" title="{{image.title}}">

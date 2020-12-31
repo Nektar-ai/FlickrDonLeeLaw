@@ -96,20 +96,11 @@ export class FlickrgetService {
     this.dateMax = max;
     console.log("SET SERVICE MAX", this.dateMax);
   }
-  
+
+  getInfo(photoID){
+    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
+  }
 }
-
-      // urlArr.forEach((picObj: any) => { // Ici, c'est ma 2ème tentative, la 1ère était au dessus du if (pic.farm....)
-        
-      //   this.getSize(picObj.id).subscribe (data =>{
-
-      //   let sizeList = data["sizes"]["size"]; // sizeList ici devient la liste des différents tailles disponibles pour la même photo
-      //   var lastSize = sizeList.pop();        // la dernière est toujours la plus grande, donc c'est sur celle ci que je vais faire la vérification
-      //   console.log(lastSize.height, lastSize.width)
-      //   if (lastSize.height*3 > lastSize.width && lastSize.width*3 < lastSize.height)
-      //     urlArrFinal.push(picObj)
-          
-      // })});
 
       //return urlArrFinal;
   //     return urlArr;
