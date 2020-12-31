@@ -59,32 +59,28 @@ export class FlickrgetService {
           id: pic.id,
           url: `https://farm${pic.farm}.staticflickr.com/${pic.farm}/${pic.id}_${pic.secret}`,
           title: pic.title,
-
         };
 
         if (pic.farm != "0")
           urlArr.push(photoObject);
       });
-
-      const urlArrFinal = [];
       
       return urlArr;
       
     }));
   }
 
-  // getBigPic (id: string): any 
-  // {
-  //   return this.getSize(id).subscribe (data =>{
-
-  //     let sizeList = data["sizes"]["size"];
-  //     // var lastSize = sizeList.pop();
-  //     this.oriPic = sizeList.pop();
-  //     console.log(this.oriPic)
-  //     console.log(this.oriPic.height, this.oriPic.width)
-  //     return this.oriPic;
-  //   })
-  // }
+  getBigPic (id: string): any 
+  {
+    return this.getSize(id).subscribe (data =>{
+      let sizeList = data["sizes"]["size"];
+      let imgOriginObj = sizeList.pop();
+      let imgOrigin = imgOriginObj["source"]
+      return imgOrigin;
+      // console.log(this.imgOrigin)
+      // console.log(imgOriginObj.height, imgOriginObj.width)
+    })
+  }
 
   setMedia(type: string): void {
     this.mediaType = type;
@@ -207,3 +203,16 @@ export class FlickrgetService {
       //   if (lastSize.height*3 > lastSize.width && lastSize.width*3 > lastSize.height)
       //     photoObject = null;
       // })
+
+  // getBigPic (id: string): any 
+  // {
+  //   return this.getSize(id).subscribe (data =>{
+
+  //     let sizeList = data["sizes"]["size"];
+  //     // var lastSize = sizeList.pop();
+  //     this.oriPic = sizeList.pop();
+  //     console.log(this.oriPic)
+  //     console.log(this.oriPic.height, this.oriPic.width)
+  //     return this.oriPic;
+  //   })
+  // }

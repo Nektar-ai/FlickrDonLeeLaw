@@ -13,8 +13,8 @@ export class ImgsSearchComponent implements OnInit {
 
   images = [];
   keyword: string;
-  imgOrigin: string;
-  imgOrigin2: any;
+  img1024: string;
+  imgOrigin: any;
 
   // @Output() createImg= new EventEmitter<any>();
 
@@ -62,35 +62,33 @@ export class ImgsSearchComponent implements OnInit {
     document.querySelector(".containerImg").setAttribute("style","filter: blur(10px)")
     document.querySelector(".blurrer").setAttribute("style","display: block");
     document.querySelector(".original").setAttribute("style","display: block");
-    this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+    this.img1024 = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
     let picID = event.target.getAttribute("id");
-    this.imgOrigin2 = this.flickrGetService.getBigPic(picID);
-    console.log(this.imgOrigin2)
+    this.imgOrigin = this.flickrGetService.getBigPic(picID)
+    console.log(this.imgOrigin)
+    // console.log(imgOriginObj.height, imgOriginObj.width)
+    // this.imgOrigin2 = this.flickrGetService.getBigPic(picID);
+    // console.log(this.imgOrigin2)
   }
 
   onBlurrerClick(event){
     document.querySelector(".containerImg").setAttribute("style","filter: unset")
     event.target.style.display = "none";
     event.target.nextElementSibling.firstElementChild.style.display = "none";
-    this.imgOrigin = "";
+    this.img1024 = "";
   }
 
   getBigPic (id: string): any 
   {
     return this.flickrGetService.getSize(id).subscribe (data =>{
-
       let sizeList = data["sizes"]["size"];
-      // var lastSize = sizeList.pop();
-      this.oriPic = sizeList.pop();
-      console.log(this.oriPic)
-      console.log(this.oriPic.height, this.oriPic.width)
-      return this.oriPic;
+      let imgOriginObj = sizeList.pop();
+      this.imgOrigin = imgOriginObj["source"]
+      console.log(this.imgOrigin)
+      console.log(imgOriginObj.height, imgOriginObj.width)
     })
   }
-
-
 }
-
 
   // onCreate(event) {
   //   // alert("ok");
