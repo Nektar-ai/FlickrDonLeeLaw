@@ -73,6 +73,19 @@ export class FlickrgetService {
     }));
   }
 
+  // getBigPic (id: string): any 
+  // {
+  //   return this.getSize(id).subscribe (data =>{
+
+  //     let sizeList = data["sizes"]["size"];
+  //     // var lastSize = sizeList.pop();
+  //     this.oriPic = sizeList.pop();
+  //     console.log(this.oriPic)
+  //     console.log(this.oriPic.height, this.oriPic.width)
+  //     return this.oriPic;
+  //   })
+  // }
+
   setMedia(type: string): void {
     this.mediaType = type;
     console.log("SET SERVICE MEDIA", this.mediaType);
@@ -103,25 +116,14 @@ export class FlickrgetService {
       // })});
 
       //return urlArrFinal;
-      return urlArr;
+  //     return urlArr;
       
-    }));
-  }
+  //   }));
+  // }
 
-  getBigPic (id: string): any 
-  {
-    return this.getSize(id).subscribe (data =>{
+  
 
-      let sizeList = data["sizes"]["size"];
-      // var lastSize = sizeList.pop();
-      this.oriPic = sizeList.pop();
-      console.log(this.oriPic)
-      console.log(this.oriPic.height, this.oriPic.width)
-      return this.oriPic;
-    })
-  }
 
-}
         // this.getSize(pic.id).toPromise().then(data =>{
         //   let sizeList = data["sizes"]["size"];
         //   let ok = false;
