@@ -209,20 +209,58 @@ iframe.original{
 
 .infoShow{
     left: 10px;
-    top: 50%;
+    top: 42%;
     width: 300px;
     padding: 20px;
-    height: 90%;
+    height: 80%;
     transform: translateY(-50%) !important;
     transition: all 0.5s ease-in-out;
     border-radius: 10px;
     font-size: 18px;
     font-weight: 400;
+    overflow: auto;
 }
 
 .infoShow:hover {
     background-color: #000000AA;
     
+}
+
+.owners{
+    display: flex;
+    height: fit-content;
+    overflow: auto;
+    position: absolute;
+    bottom: 0;
+    right: 25px;
+    width: 100%;
+    padding: 10px;
+}
+
+.owners img {
+    animation: imageFade 2s ease-in;
+    z-index: 1;
+    transition: all 0.5s cubic-bezier(0.68, 0.62, 0.35, 1.96);
+    opacity: 0.7;
+    margin: 5px;
+    position: relative;
+    bottom: 0px;
+}
+
+.owners img:hover {
+    z-index: 2;
+    opacity: 1;
+    transform: scale(1.1);
+    bottom: 5px;
+}
+
+@keyframes imageFade {
+    0% {
+        opacity: 0;
+    }
+    100%{
+        opacity: 0.7;
+    }
 }
 /* .divPic::after {
     --w: 2;

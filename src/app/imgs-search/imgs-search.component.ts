@@ -13,6 +13,7 @@ import { FlickrgetService } from '../service/flickrget.service';
 export class ImgsSearchComponent implements OnInit {
 
   images = [];
+  OwnerImages = [];
   keyword: string;
   imgOrigin: string;
 
@@ -94,7 +95,7 @@ export class ImgsSearchComponent implements OnInit {
       this.description = data["photo"]["description"]["_content"];
       this.owner = data["photo"]["owner"]["username"];
       this.date = data["photo"]["dates"]["taken"];
-      console.log(data)
+      this.getOwnerimage(data["photo"]["owner"]["nsid"]);
     })
   }
 
@@ -112,5 +113,25 @@ export class ImgsSearchComponent implements OnInit {
         event.target.innerHTML = "i";
       }, 1000);
     }
+  }
+
+  getOwnerimage(owner){
+    this.OwnerImages = [];
+    this.flickrGetService.getOwnersImgs(owner).subscribe( data => {
+      var photos = data["photos"]["photo"];
+      photos.forEach(element => {
+        this.flickrGetService.getSize(element["id"]).subscribe( data1 => {
+          const photoStruck = {
+            thumbnail: data1["sizes"]["size"][0]["source"],
+            orignal: data1["sizes"]["size"].pop()["source"]
+          }
+          this.OwnerImages.push(photoStruck)
+        })
+      });
+    })
+  }
+
+  OwnerImgclick(event){
+    this.imgOrigin = event.target.alt;
   }
 }
