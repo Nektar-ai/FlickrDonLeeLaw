@@ -133,8 +133,6 @@ img {
 
 .original {
     height: fit-content;
-    max-height: 100%;
-    display: none;
 }
 
 iframe.original{
@@ -147,39 +145,85 @@ iframe.original{
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    height: fit-content;
-    max-height: 90%;
+    height: 90%;
     width: fit-content;
     max-width: 95%;
     padding-right: 10px;
-    overflow: auto;
+    display: none;
 }
 
-.imgContainer::-webkit-scrollbar {
+.imgContainer > div:first-child {
+    height: 100%;
+    overflow: auto;
+    padding: 10px;
+}
+
+.imgContainer > div::-webkit-scrollbar {
     width: 10px;
     position: relative;
     left: 5px;
 }
 
-.imgContainer::-webkit-scrollbar-track {
+.imgContainer > div::-webkit-scrollbar-track {
     background: transparent;
     border-left: 10px;
 }
   
-.imgContainer::-webkit-scrollbar-thumb {
+.imgContainer > div::-webkit-scrollbar-thumb {
     border-radius: 5px;
     background: #444;
 }
   
-.imgContainer::-webkit-scrollbar-thumb:hover {
+.imgContainer > div::-webkit-scrollbar-thumb:hover {
     background: #292929;
 }
 
-.imgContainer::-webkit-scrollbar-button {
+.imgContainer > div::-webkit-scrollbar-button {
     height: 10px;
     border-radius: 5px;
 }
 
+.info {
+    font-weight: 800;
+    color: white;
+    position: relative;
+    top: 20px;
+    left: -70px;
+    background: #505050AA;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 37px;
+    border: 1px solid white;
+    border-radius: 25px;
+    box-shadow: 0 0 10px white;
+    font-size: 22px;
+    transition: all 1s ease-in-out;
+}
+
+.info:hover {
+    background-color: #505050;
+    box-shadow: 0 0 20px white;
+
+}
+
+.infoShow{
+    left: 10px;
+    top: 50%;
+    width: 300px;
+    padding: 20px;
+    height: 90%;
+    transform: translateY(-50%) !important;
+    transition: all 0.5s ease-in-out;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.infoShow:hover {
+    background-color: #000000AA;
+    
+}
 /* .divPic::after {
     --w: 2;
     --h: 1;

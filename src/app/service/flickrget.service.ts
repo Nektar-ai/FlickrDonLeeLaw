@@ -83,7 +83,9 @@ export class FlickrgetService {
     }));
   }
 
-  
+  getInfo(photoID){
+    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
+  }
 }
 
 

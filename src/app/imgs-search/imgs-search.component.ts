@@ -2,6 +2,7 @@ import { Output } from '@angular/core';
 import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
+import { title } from 'process';
 import { FlickrgetService } from '../service/flickrget.service';
 
 @Component({
@@ -14,6 +15,13 @@ export class ImgsSearchComponent implements OnInit {
   images = [];
   keyword: string;
   imgOrigin: string;
+
+  // faire une class Nektar
+  titre: string;
+  description: string;
+  owner: string;
+  date: string;
+
 
   @Output() createImg= new EventEmitter<any>(); 
 
@@ -65,14 +73,44 @@ export class ImgsSearchComponent implements OnInit {
   onImageClick(event) {
     document.querySelector(".containerImg").setAttribute("style","filter: blur(10px)")
     document.querySelector(".blurrer").setAttribute("style","display: block");
-    document.querySelector(".original").setAttribute("style","display: block");
+    document.querySelector(".imgContainer").setAttribute("style","display: flex");
+    document.querySelector(".info").setAttribute("class","info");
+
     this.imgOrigin = event.target.getAttribute("src").replace("_m.jpg","_b.jpg");
+    this.getImginfo(event);
   }
 
   onBlurrerClick(event){
     document.querySelector(".containerImg").setAttribute("style","filter: unset")
+    document.querySelector(".info").innerHTML = "i";
     event.target.style.display = "none";
-    event.target.nextElementSibling.firstElementChild.style.display = "none";
+    event.target.nextElementSibling.style.display = "none";
     this.imgOrigin = "";
+  }
+
+  getImginfo(event){
+    this.flickrGetService.getInfo(event.target.getAttribute("id")).subscribe(data => {
+      this.titre = data["photo"]["title"]["_content"];
+      this.description = data["photo"]["description"]["_content"];
+      this.owner = data["photo"]["owner"]["username"];
+      this.date = data["photo"]["dates"]["taken"];
+      console.log(data)
+    })
+  }
+
+  showInfo(event){
+    if (event.target.getAttribute("class") == "info") {
+      event.target.setAttribute("class","info infoShow")
+      event.target.innerHTML = "";
+      setTimeout(() => {
+        event.target.innerHTML = this.titre + "<br><br>description :<br>" + this.description + "<br>owner :<br>" + this.owner + "<br>date :<br>" + this.date + "<br>";
+      }, 500);
+    }else{
+      event.target.setAttribute("class","info")
+      event.target.innerHTML = "";
+      setTimeout(() => {
+        event.target.innerHTML = "i";
+      }, 1000);
+    }
   }
 }
