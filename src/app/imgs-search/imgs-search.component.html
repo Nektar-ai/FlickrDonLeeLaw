@@ -1,5 +1,5 @@
 <div style="text-align: center;">
-    <input value="" style="width:50%;" type="search" class="form-control" (keyup.enter)="search($event)"
+    <input value="space" style="width:50%;" type="search" class="form-control" (keyup.enter)="search($event)"
         placeholder="Keyword...">
 </div>
 
@@ -26,8 +26,8 @@
     <div>
         <img class="original" src={{img1024}} alt="Orginal sized image">
     </div>
-    <div class="info" (click)="showInfo($event)"> i </div>
+    <div class="info" (click)="showInfo()"> i </div>
     <div class="owners">
-        <img id="{{image.id}}" *ngFor="let image of OwnerImages" alt={{image.original}} src={{image.thumbnail}} class="ownersImage" (click)="OwnerImgclick($event)">
+        <img id="{{image.id}}" *ngFor="let image of OwnerImages" alt={{image.original}} src={{image.thumbnail}} class="ownersImage" (click)="ownerImgClick($event)">
     </div>
 </div>

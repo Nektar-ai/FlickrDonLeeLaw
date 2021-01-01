@@ -26,11 +26,10 @@ export class FlickrgetService {
 
   prevKeyword: string;
   currPage = 1;
-  // imgHeight = 0;
-  // imgWidth = 0;
   mediaType: string;
   dateMin: number;
   dateMax: number;
+  imgOrigin: any;
   ok = false;
 
   constructor(private http: HttpClient) { }
@@ -59,7 +58,8 @@ export class FlickrgetService {
           url: `https://farm${pic.farm}.staticflickr.com/${pic.farm}/${pic.id}_${pic.secret}`,
           title: pic.title          
         };
-        console.log(pic);
+        console.log(res.photos.photo);
+        console.log(params);
         if (pic.farm != "0")
           urlArr.push(photoObject);
       });
@@ -73,9 +73,12 @@ export class FlickrgetService {
   {
     return this.getSize(id).subscribe (data =>{
       let sizeList = data["sizes"]["size"];
+      console.log(sizeList);
       let imgOriginObj = sizeList.pop();
-      let imgOrigin = imgOriginObj["source"]
-      return imgOrigin;
+      this.imgOrigin = imgOriginObj["source"]
+      
+      console.log(this.imgOrigin);
+      return this.imgOrigin;
     })
   }
 
@@ -102,106 +105,3 @@ export class FlickrgetService {
     return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickrKey.key}&user_id=${owner}&format=json&nojsoncallback=1`);
   }
 }
-
-
-
-
-
-
-
-        // this.getSize(pic.id).toPromise().then(data =>{
-        //   let sizeList = data["sizes"]["size"];
-        //   let ok = false;
-        //   console.log(sizeList);
-        //   var lastSize = sizeList.pop();
-          
-        //   console.log(lastSize);
-
-        // console.log(photoObject.sizes)
-
-        // let picOri = this.getOriginal(pic.id).subscribe(data => {
-        //   let url = data["source"]
-        //   console.log(url)
-        // })
-        
-        // console.log(picOri)
-
-        // let sizes2 = getSize2(pic.id, this.http)
-        // console.log("Valeur de sizes2 :"+sizes2);
-
-
-
-        // var picSize = this.getSize(pic.id);
-        // console.log(picSize);
-
-        // var picInfo = this.getInfo(pic.id);
-        // console.log(picSize);
-        // console.log(res);
-        // console.log(pic);
-        // console.log(photoObject.url);
-        // var lastSize;
-        
-        // let width: number;
-        // let height: number = 1;
-        
-        
-        // var sizesList = this.getSize(pic.id).map(data =>{
-        //   let sizeList = data["sizes"]["size"]
-        //   var lastSize = sizeList.pop();
-        //   pic.height = lastSize.height; 
-        //   pic.width = lastSize.width;
-        // });
-        
-        // let promise = new Promise (resolve => {
-        
-        //   setTimeout(() => resolve(this.getSize(pic.id).toPromise().then(data =>{
-        //     let sizeList = data["sizes"]["size"];
-        //     let ok = false;
-        //     var lastSize = sizeList.pop();
-        //     console.log(lastSize);
-        //     pic.height = lastSize.height; 
-        //     pic.width = lastSize.width;
-        //     return lastSize.width;
-        //     )), 1000);                  
-        // }});
-        // promise.then(console.log());
-        // let promise2 = promise.resolve();
-        // console.log(typeof(lastSize));
-
-
-        // var divImg = document.getElementById("pictures");
-      // divImg.style.opacity = "1";
-      // divImg.style.transition = "all 0.5s ease";
-      
-      // setTimeout(() => {
-      //   divImg.style.opacity = "1";
-      // }, 2000);
-
-            // this.getSize(pic.id).subscribe (data =>{
-      // let sizeList = data["sizes"]["size"];
-      // let sizesIn: number[]
-      // let ok = false;
-      // console.log(pic)
-      // console.log(sizeList);
-      // var lastSize = sizeList.pop();
-      // console.log(lastSize);
-      // console.log(lastSize.height);
-      // console.log(lastSize.width);
-      // sizesIn.push(lastSize.height);
-      // sizesIn.push(lastSize.width);        
-      //   if (lastSize.height*3 > lastSize.width && lastSize.width*3 > lastSize.height)
-      //     photoObject = null;
-      // })
-
-  // getBigPic (id: string): any 
-  // {
-  //   return this.getSize(id).subscribe (data =>{
-
-  //     let sizeList = data["sizes"]["size"];
-  //     // var lastSize = sizeList.pop();
-  //     this.oriPic = sizeList.pop();
-  //     console.log(this.oriPic)
-  //     console.log(this.oriPic.height, this.oriPic.width)
-  //     return this.oriPic;
-  //   })
-  // }

@@ -14,7 +14,7 @@ input:hover {
     flex-wrap: wrap;    
     margin-left: 20%;
     margin-right: 20%;
-    justify-content: center;
+    justify-content: center; 
 }
 
 .divPic {
@@ -26,7 +26,6 @@ input:hover {
     margin-top: 5px;
     margin-bottom: 5px;
     max-width: inherit;
-    /* overflow: hidden; */
 }
 
 .imgTest {
@@ -38,7 +37,8 @@ img {
     border-radius: 10px;
     border-color: black;
     height: inherit;
-    width:var(--ratio)
+    width:var(--ratio);
+    animation: imageFade 0.75s ease-in;
 }
 
 .divPic:hover {
@@ -66,8 +66,6 @@ img {
 }
 .divPic > a {
     height: inherit;
-    /* margin: 0.25rem; */
-    /* flex-grow: calc(var(--ratio) * 100) */
 }
 
 .blurrer {
@@ -214,26 +212,32 @@ iframe.original{
 }
 
 .infoShow:hover {
-    background-color: #000000AA;
-    
+    background-color: #000000AA;  
 }
 
-.owners{
+.owners {
     display: flex;
     height: fit-content;
     overflow: auto;
     position: absolute;
     bottom: 0;
-    right: 25px;
-    width: 100%;
+    left: 45%;    
+    transform: translate(-48%, -50%);
+    transition: all 1s ease-in-out;
+    width: 525px;
     padding: 10px;
+}
+
+.ownersSlide {
+    transform: translate(-62%, -20%);
+    transition: all 0.5s ease-in-out;
 }
 
 .owners img {
     animation: imageFade 2s ease-in;
     z-index: 1;
     transition: all 0.5s cubic-bezier(0.68, 0.62, 0.35, 1.96);
-    opacity: 0.7;
+    opacity: 0.8;
     margin: 5px;
     position: relative;
     bottom: 0px;
@@ -243,7 +247,7 @@ iframe.original{
     z-index: 2;
     opacity: 1;
     transform: scale(1.1);
-    bottom: 5px;
+    bottom: 4px;
 }
 
 @keyframes imageFade {
@@ -251,6 +255,6 @@ iframe.original{
         opacity: 0;
     }
     100%{
-        opacity: 0.7;
+        opacity: 0.9;
     }
 }
