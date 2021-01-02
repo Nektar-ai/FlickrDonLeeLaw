@@ -1,8 +1,7 @@
-import { Injectable, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 
 export interface FlickrPic {
   farm: string;
@@ -30,14 +29,21 @@ export class FlickrgetService {
   dateMin: number;
   dateMax: number;
   imgOrigin: any;
-  ok = false;
 
   constructor(private http: HttpClient) { }
 
   getSize(photoID): any {
     return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
   }
+  
+  getInfo(photoID){
+    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
+  }
 
+  getOwnersImgs(owner){
+    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickrKey.key}&user_id=${owner}&format=json&nojsoncallback=1`);
+  }
+  
   search_keyword(keyword: string) { // Fonction appelée depuis le composant qui présente l'input à l'utilisateur pour taper ses champs de recherche
 
     if (this.prevKeyword === keyword) {        
@@ -69,39 +75,15 @@ export class FlickrgetService {
     }));
   }
 
-  getBigPic (id: string): any 
-  {
-    return this.getSize(id).subscribe (data =>{
-      let sizeList = data["sizes"]["size"];
-      console.log(sizeList);
-      let imgOriginObj = sizeList.pop();
-      this.imgOrigin = imgOriginObj["source"]
-      
-      console.log(this.imgOrigin);
-      return this.imgOrigin;
-    })
-  }
-
   setMedia(type: string): void {
-    this.mediaType = type;
-    console.log("SET SERVICE MEDIA", this.mediaType);
+    this.mediaType = type;    
   }
 
   setDateMin(min: number): void {
     this.dateMin = min;
-    console.log("SET SERVICE MIN", this.dateMin);
   }
 
   setDateMax(max: number): void {
     this.dateMax = max;
-    console.log("SET SERVICE MAX", this.dateMax);
-  }
-
-  getInfo(photoID){
-    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.getInfo&api_key=${environment.flickrKey.key}&photo_id=${photoID}&format=json&nojsoncallback=1`);
-  }
-
-  getOwnersImgs(owner){
-    return this.http.get(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${environment.flickrKey.key}&user_id=${owner}&format=json&nojsoncallback=1`);
   }
 }

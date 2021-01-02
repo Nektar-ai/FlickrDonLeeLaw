@@ -1,5 +1,4 @@
 import { Output } from '@angular/core';
-import { ElementRef } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FlickrgetService } from '../service/flickrget.service';
@@ -24,7 +23,7 @@ export class ImgsSearchComponent implements OnInit {
 
   @Output() createImg= new EventEmitter<any>(); 
 
-  constructor(private flickrGetService: FlickrgetService, private elem: ElementRef) { }
+  constructor(private flickrGetService: FlickrgetService) { }
 
   ngOnInit(): void { }
 
@@ -84,7 +83,7 @@ export class ImgsSearchComponent implements OnInit {
       document.querySelector(".owners").setAttribute("class","owners ownersSlide")
       document.querySelector(".info").innerHTML = "";
       setTimeout(() => {
-        document.querySelector(".info").innerHTML = this.titre.toUpperCase().bold() + "<br><br><strong>Description :</strong><br>" + this.description + "<br><br><strong>Owner :</strong><br>" + this.owner + "<br><br><strong>Date :</strong><br>" + this.date.slice(0,10) + "<br>";
+        document.querySelector(".info").innerHTML = "<h4>" + this.titre.toUpperCase().bold() + "</h4><br><strong><u>Description</u></strong><br>" + this.description + "<br><br><strong><u>Owner</u></strong><br>" + this.owner + "<br><br><strong><u>Date</u></strong><br>" + this.date.slice(0,10) + "<br>";
       }, 500);
     } else {
       document.querySelector(".info").setAttribute("class","info")
