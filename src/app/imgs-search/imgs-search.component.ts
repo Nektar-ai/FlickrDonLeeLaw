@@ -2,6 +2,8 @@ import { Output } from '@angular/core';
 import { EventEmitter } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FlickrgetService } from '../service/flickrget.service';
+import { MongogetService } from '../service/mongoget.service';
+
 
 @Component({
   selector: 'app-imgs-search',
@@ -23,16 +25,30 @@ export class ImgsSearchComponent implements OnInit {
 
   @Output() createImg= new EventEmitter<any>(); 
 
-  constructor(private flickrGetService: FlickrgetService) { }
+  constructor(private flickrGetService: FlickrgetService,private mongoGetService: MongogetService) { }
 
   ngOnInit(): void { }
 
   search(event) {
     this.keyword = event.target.value.toLowerCase();
     if (this.keyword && this.keyword.length > 2) {
-      this.flickrGetService.search_keyword(this.keyword).subscribe(res => {
-        this.images = res;
-      });
+      this.mongoGetService.getRecherche(this.keyword).subscribe(data => {
+        if (data != null) {
+          this.images = data['urls'];
+          this.flickrGetService.currPage = data['currPage'];
+          this.flickrGetService.prevKeyword = this.keyword;
+        }else{
+          this.flickrGetService.search_keyword(this.keyword).subscribe(res => {
+            if (res != null) {
+              this.images = res;
+              this.mongoGetService.insertRecherche({name:this.keyword,currPage:this.flickrGetService.currPage,date:new Date().getTime(),urls:this.images}).subscribe(data => {
+                console.log(data);
+              })
+            }
+          });
+        }
+      })
+      
     }
     event.target.blur();
   }
@@ -43,6 +59,12 @@ export class ImgsSearchComponent implements OnInit {
         .toPromise()
         .then(res => {
           this.images = this.images.concat(res);
+          console.log(this.images.length);
+          if (this.images.length % 48 != 0) {
+            this.mongoGetService.updateRecherche({name:this.keyword,currPage:this.flickrGetService.currPage, date:new Date().getTime(),urls:this.images}).subscribe(data => {
+              console.log(data);
+            })
+          }
         });
     }
   }

@@ -6,6 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { FiltreImagesComponent } from './filtre-images/filtre-images.component';
 import { FormsModule } from '@angular/forms';
+import { Mongodb } from '../../node_modules/mongodb';
 
 @NgModule({
   declarations: [

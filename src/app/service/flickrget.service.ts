@@ -64,8 +64,8 @@ export class FlickrgetService {
           url: `https://farm${pic.farm}.staticflickr.com/${pic.farm}/${pic.id}_${pic.secret}`,
           title: pic.title          
         };
-        console.log(res.photos.photo);
-        console.log(params);
+        //console.log(res.photos.photo);
+        //console.log(params);
         if (pic.farm != "0")
           urlArr.push(photoObject);
       });
