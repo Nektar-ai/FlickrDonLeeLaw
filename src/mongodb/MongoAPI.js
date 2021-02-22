@@ -4,7 +4,7 @@ var url = 'mongodb://localhost:27017';
 
 var app = express();
 app.use(express.urlencoded());
-app.use(express.json());
+app.use(express.json({limit:'50mb'}));
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin','http://localhost:4200')
